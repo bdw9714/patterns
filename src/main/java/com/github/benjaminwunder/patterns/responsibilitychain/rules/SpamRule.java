@@ -16,18 +16,16 @@ public class SpamRule extends BasicRule {
 
 	@Override
 	public void applyRule(Email email) {
-		this.setStopProcessing(false); // If it has been previously set to true it needs to be cleared
-		Boolean moved = false;
 		for (String spamDomain : spamDomains) {
 			if (email.getFrom().toLowerCase().contains(spamDomain.toLowerCase())) {
+				System.out.println("Spam Rule Applies");
 				email.discard();
-				moved = true;
-				this.setStopProcessing(true);
+				if (this.isStopProcessing())
+					return;
 			}
 		}
 
-		if (!moved)
-			System.out.println("SpamRule Does Not Apply");
+		System.out.println("Spam Rule Does Not Apply");
 
 		callNextRule(email);
 	}

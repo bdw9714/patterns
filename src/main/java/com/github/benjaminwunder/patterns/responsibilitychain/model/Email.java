@@ -39,7 +39,7 @@ public class Email {
 	}
 
 	public void move(String folderName) {
-		System.out.printf("Moving Email [Subject: %s] [From: %s] [To: %s] to folder <%s>.%n", subject, from, to, folderName);
+		System.out.printf("\tMoving Email [Subject: %s] [From: %s] [To: %s] to folder <%s>.%n", subject, from, to, folderName);
 	}
 
 	public void discard() {

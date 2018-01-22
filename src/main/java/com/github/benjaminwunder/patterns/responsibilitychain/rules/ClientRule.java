@@ -15,18 +15,16 @@ public class ClientRule extends BasicRule {
 
 	@Override
 	public void applyRule(Email email) {
-		this.setStopProcessing(false);
-		Boolean moved = false;
 		for (String domain : clientDomains) {
 			if (email.getFrom().toLowerCase().contains(domain.toLowerCase())) {
+				System.out.println("Client Rule Applies");
 				email.move("Clients");
-				moved = true;
-				this.setStopProcessing(true);
+				if (this.isStopProcessing())
+					return;
 			}
 		}
 
-		if (!moved)
-			System.out.println("ClientRule Does Not Apply");
+		System.out.println("Client Rule Does Not Apply");
 
 		callNextRule(email);
 	}

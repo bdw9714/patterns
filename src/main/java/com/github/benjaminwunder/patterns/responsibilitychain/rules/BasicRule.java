@@ -11,7 +11,7 @@ public abstract class BasicRule implements Rule {
 	}
 
 	public void callNextRule(Email email) {
-		if (!stopProcessing && nextRule != null)
+		if (nextRule != null)
 			nextRule.applyRule(email);
 	}
 

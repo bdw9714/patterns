@@ -16,6 +16,7 @@ public class RulesProcessor {
 
 	private SpamRule setupSpamRule() {
 		SpamRule spamRule = new SpamRule();
+
 		// Sourced from http://www.joewein.de/
 		spamRule.addSpamDomain("usawarriorwatchher.com");
 		spamRule.addSpamDomain("eextrabingoseurodice.pl");
@@ -28,12 +29,15 @@ public class RulesProcessor {
 		spamRule.addSpamDomain("all4yoynow.info");
 		spamRule.addSpamDomain("cassie-bury.us");
 
+		spamRule.setStopProcessing(true);
 		return spamRule;
 	}
 
 	private InternalRule setupInternalRule() {
 		InternalRule internalRule = new InternalRule();
+
 		internalRule.setInternalDomain("mycompany.com");
+		internalRule.setStopProcessing(true);
 		return internalRule;
 	}
 
@@ -44,6 +48,7 @@ public class RulesProcessor {
 		clientRule.addClient("amazon.com");
 		clientRule.addClient("ebay.com");
 
+		clientRule.setStopProcessing(true);
 		return clientRule;
 	}
 
@@ -68,25 +73,25 @@ public class RulesProcessor {
 		Email clientEmail = new Email();
 		clientEmail.setFrom("support@dell.com");
 		clientEmail.setSubject("Requesting Support");
-		clientEmail.setMessage("Can you help us with this specific issue?");
-		clientEmail.setTo("benjaminwunder");
+		clientEmail.setMessage("Can you help us with issue TX-123?");
+		clientEmail.setTo("benjaminwunder@gmail.com");
 		rulesProcessor.processRules(clientEmail);
 
 		System.out.println("\nTesting Spam Functionality...");
 		// Test Spam Functionality
 		Email spamEmail = new Email();
-		spamEmail.setFrom("all4yoynow.info");
+		spamEmail.setFrom("spammer@all4yoynow.info");
 		spamEmail.setSubject("Please Your Have Attention");
 		spamEmail.setMessage("I am in desparate need of wiring $300,000 to your country!  Please reply back!");
-		spamEmail.setTo("benjaminwunder");
+		spamEmail.setTo("benjaminwunder@gmail.com");
 		rulesProcessor.processRules(spamEmail);
 
 		System.out.println("\nTesting Internal Functionality...");
 		Email internalEmail = new Email();
-		internalEmail.setFrom("mycompany.com");
+		internalEmail.setFrom("joeblow@mycompany.com");
 		internalEmail.setSubject("Lunch?");
-		internalEmail.setMessage("Chipotle?");
-		internalEmail.setTo("benjaminwunder");
+		internalEmail.setMessage("Chipotle 12-ish?");
+		internalEmail.setTo("benjaminwunder@gmail.com");
 		rulesProcessor.processRules(internalEmail);
 	}
 }

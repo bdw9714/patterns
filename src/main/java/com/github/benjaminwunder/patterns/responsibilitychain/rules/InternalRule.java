@@ -7,10 +7,11 @@ public class InternalRule extends BasicRule {
 
 	@Override
 	public void applyRule(Email email) {
-		this.setStopProcessing(false);
 		if (email.getFrom().toLowerCase().contains(internalDomain.toLowerCase())) {
+			System.out.println("Internal Rule Applies");
 			email.move("Internal");
-			this.setStopProcessing(true);
+			if (this.isStopProcessing())
+				return;
 		} else
 			System.out.println("Internal Rule Does Not Apply");
 
